@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Estilo Apple/Samsung - Fondo blanco premium */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
+
+    /* Cards con efecto elevado */
+    --card: 0 0% 98%;
+    --card-foreground: 240 10% 10%;
+
+    /* Popovers */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    /* Azul premium estilo Apple (#007AFF) */
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Gris claro para elementos secundarios */
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 10%;
+
+    /* Elementos silenciados */
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 35%;
+
+    /* Acentos con tono índigo/púrpura */
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 10% 10%;
+
+    /* Destructivo en rojo */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Bordes sutiles */
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+
+    /* Ring azul premium */
+    --ring: 211 100% 50%;
+
+    /* Border radius más redondeado estilo Apple */
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism estilo Apple/Samsung para fondo claro */
+  .glass {
+    @apply border border-gray-200/50 bg-white/80 shadow-lg backdrop-blur-xl;
+  }
+
+  .glass-hover {
+    @apply transition-all duration-500 ease-out hover:border-gray-300/60 hover:bg-white/90 hover:shadow-xl;
+  }
+
+  /* Degradado premium azul a índigo */
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent;
+  }
+
+  /* Glow sutil estilo premium para fondo claro */
+  .glow {
+    @apply shadow-[0_0_20px_rgba(0,122,255,0.15)];
+  }
+
+  .glow-hover {
+    @apply transition-shadow duration-500 ease-out hover:shadow-[0_0_40px_rgba(0,122,255,0.25)];
+  }
+
+  /* Sombra suave para elevación en fondo claro */
+  .shadow-premium {
+    @apply shadow-[0_8px_30px_rgba(0,0,0,0.08)];
+  }
+
+  /* Hover suave estilo Apple */
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+  }
+
+  /* Animaciones personalizadas */
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-glow {
+    animation: glow 4s ease-in-out infinite;
+  }
+
+  .animate-gradient {
+    animation: gradient 6s ease infinite;
+  }
+}

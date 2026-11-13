@@ -60,5 +60,5 @@ export interface Content {
     };
     channels: { email: string; whatsapp: string; location: string };
   };
-  footer: { rights: string; built: string };
+  footer: { rights: string };
 }

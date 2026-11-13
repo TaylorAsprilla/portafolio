@@ -60,12 +60,20 @@ export const es: Content = {
       {
         title: "Full Stack Development",
         text: "Producto completo, de la interfaz a la base de datos.",
-        points: ["React, Next.js y Angular", "Node.js, NestJS y Python", "TypeScript de punta a punta"],
+        points: [
+          "React, Next.js y Angular",
+          "Node.js, NestJS y Python",
+          "TypeScript de punta a punta",
+        ],
       },
       {
         title: "Software Architecture",
         text: "Sistemas pensados para evolucionar sin reescribirse.",
-        points: ["Diseño de sistemas y módulos", "Decisiones técnicas documentadas", "Escalabilidad y mantenibilidad"],
+        points: [
+          "Diseño de sistemas y módulos",
+          "Decisiones técnicas documentadas",
+          "Escalabilidad y mantenibilidad",
+        ],
       },
       {
         title: "Data Engineering & Analytics",
@@ -80,7 +88,11 @@ export const es: Content = {
       {
         title: "Technical Leadership",
         text: "Equipos que entregan con criterio, ritmo y calidad.",
-        points: ["Liderazgo de equipos de ingeniería", "Mentoría y code review", "Planificación y entrega"],
+        points: [
+          "Liderazgo de equipos de ingeniería",
+          "Mentoría y code review",
+          "Planificación y entrega",
+        ],
       },
     ],
   },
@@ -99,15 +111,46 @@ export const es: Content = {
     groups: [
       {
         title: "AI & Agents",
-        items: ["Claude API", "OpenAI API", "MCP (Model Context Protocol)", "LangChain", "RAG y embeddings", "pgvector / Vector DBs", "n8n / Make", "Webhooks", "WhatsApp Business API"],
+        items: [
+          "Claude API",
+          "OpenAI API",
+          "MCP (Model Context Protocol)",
+          "LangChain",
+          "RAG y embeddings",
+          "pgvector / Vector DBs",
+          "n8n / Make",
+          "Webhooks",
+          "WhatsApp Business API",
+        ],
       },
       {
         title: "Frontend",
-        items: ["React", "Next.js", "Angular", "TypeScript", "JavaScript", "Tailwind CSS", "Redux / Zustand", "React Query", "Framer Motion", "React Native", "Flutter"],
+        items: [
+          "React",
+          "Next.js",
+          "Angular",
+          "TypeScript",
+          "JavaScript",
+          "Tailwind CSS",
+          "Redux / Zustand",
+          "React Query",
+          "Framer Motion",
+          "React Native",
+          "Flutter",
+        ],
       },
       {
         title: "Backend",
-        items: ["Node.js", "Express", "NestJS", "Python", "Django / FastAPI", "GraphQL", "REST APIs", "JWT / Autenticación"],
+        items: [
+          "Node.js",
+          "Express",
+          "NestJS",
+          "Python",
+          "Django / FastAPI",
+          "GraphQL",
+          "REST APIs",
+          "JWT / Autenticación",
+        ],
       },
       {
         title: "Databases",
@@ -123,7 +166,14 @@ export const es: Content = {
       },
       {
         title: "Data Engineering",
-        items: ["Python", "Pandas / NumPy", "SQL", "Pipelines ETL", "Power BI", "Visualización de datos"],
+        items: [
+          "Python",
+          "Pandas / NumPy",
+          "SQL",
+          "Pipelines ETL",
+          "Power BI",
+          "Visualización de datos",
+        ],
       },
       {
         title: "Tools & Platforms",
@@ -151,6 +201,5 @@ export const es: Content = {
   },
   footer: {
     rights: "Todos los derechos reservados.",
-    built: "Hecho con Next.js y Tailwind CSS.",
   },
 };

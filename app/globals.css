@@ -3,129 +3,363 @@
 @tailwind utilities;
 
 @layer base {
+  /* Tema único: fondo blanco y colores del logo de Taylor Interactivo */
   :root {
-    /* Estilo Apple/Samsung - Fondo blanco premium */
+    color-scheme: light;
+
     --background: 0 0% 100%;
-    --foreground: 240 10% 10%;
+    --foreground: 224 38% 13%;
 
-    /* Cards con efecto elevado */
-    --card: 0 0% 98%;
-    --card-foreground: 240 10% 10%;
+    --card: 224 35% 97%;
+    --card-foreground: 224 38% 13%;
 
-    /* Popovers */
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 224 38% 13%;
 
-    /* Azul premium estilo Apple (#007AFF) */
-    --primary: 211 100% 50%;
+    /* Azul del logo (#3F5EA8): contraste 6.6:1 sobre blanco */
+    --primary: 223 45% 46%;
     --primary-foreground: 0 0% 100%;
 
-    /* Gris claro para elementos secundarios */
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 10% 10%;
+    --secondary: 224 35% 96%;
+    --secondary-foreground: 224 38% 13%;
 
-    /* Elementos silenciados */
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 5% 35%;
+    --muted: 224 35% 96%;
+    --muted-foreground: 224 14% 38%;
 
-    /* Acentos con tono índigo/púrpura */
-    --accent: 240 5% 96%;
-    --accent-foreground: 240 10% 10%;
+    --accent: 224 35% 95%;
+    --accent-foreground: 224 38% 13%;
 
-    /* Destructivo en rojo */
-    --destructive: 0 72% 51%;
+    --destructive: 0 70% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Bordes sutiles */
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
+    --border: 224 22% 88%;
+    --input: 224 14% 62%;
+    --ring: 223 45% 46%;
 
-    /* Ring azul premium */
-    --ring: 211 100% 50%;
+    /* Naranja del logo (#F8A840): solo decorativo (puntos, detalles), nunca texto pequeño */
+    --warm: 34 93% 61%;
 
-    /* Border radius más redondeado estilo Apple */
     --radius: 0.75rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
   }
 
-  html {
-    scroll-behavior: smooth;
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Aparición al hacer scroll (ver components/ui/reveal.tsx).
+   Solo se oculta si el usuario NO pidió movimiento reducido. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  }
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Entrada del hero: CSS puro para no retrasar el LCP esperando la hidratación de React. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-in {
+    animation: hero-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) both;
+  }
+}
+
+/* Visual del hero (laptop con el logo): entrada, flotación continua e inclinación con el cursor.
+   Todo con transform/opacity y solo si el usuario NO pidió movimiento reducido. */
+.hero-visual {
+  perspective: 1400px;
+}
+.hero-visual__shadow {
+  position: absolute;
+  left: 14%;
+  right: 6%;
+  bottom: -3%;
+  height: 9%;
+  background: radial-gradient(closest-side, rgba(20, 27, 46, 0.4), rgba(20, 27, 46, 0));
+  filter: blur(8px);
+  pointer-events: none;
+}
+.hero-visual__tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+@keyframes visual-in {
+  from {
+    opacity: 0;
+    transform: translateY(56px) rotate(-3deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes visual-shadow {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scaleX(0.86);
+    opacity: 0.55;
+  }
+}
+@keyframes visual-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+/* Frase rotatoria del titular: todas las frases comparten celda (alto fijo, sin saltos) */
+.rotator {
+  display: grid;
+}
+.rotator__item {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.45em);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rotator__item.is-active {
+  opacity: 1;
+  transform: none;
+}
+.rotator__item.is-leaving {
+  transform: translateY(-0.45em);
+}
+
+/* Tarjetas flotantes alrededor del laptop */
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--chip-amp, -10px));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-chip__in {
+    animation: chip-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--chip-delay, 1s) both;
+  }
+  .hero-chip__float {
+    animation: chip-float var(--chip-dur, 6s) ease-in-out infinite;
+  }
+  .hero-visual {
+    animation: visual-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  }
+  .hero-visual__float {
+    animation: visual-float 7s ease-in-out 1.3s infinite;
+  }
+  .hero-visual__shadow {
+    animation: visual-shadow 7s ease-in-out 1.3s infinite;
+  }
+}
+
+/* ───────────── Hero con scroll: primera pantalla = laptop + palabras; al bajar aparece el texto ─────────────
+   Animaciones ligadas al scroll (CSS puro, sin JS). Solo escritorio, con soporte del navegador y sin
+   `prefers-reduced-motion`. En cualquier otro caso se muestra el diseño final (laptop izquierda, texto derecha). */
+.hero-chip--extra,
+.hero-cue {
+  display: none;
+}
+
+@keyframes hero-shift {
+  from {
+    transform: translateX(calc(25cqw + 8px)) scale(1.12);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes hero-text-in {
+  from {
+    opacity: 0;
+    transform: translateX(7cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes cue-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .hero-scroll {
+      height: calc(100dvh + 90vh);
+    }
+    .hero-stage {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      min-height: 0;
+    }
+    .hero-chip--extra {
+      display: block;
+    }
+    .hero-cue {
+      display: flex;
+    }
+    .hero-cue__arrow {
+      animation: cue-bounce 1.6s ease-in-out infinite;
+    }
+
+    .hero-visual-col {
+      animation: hero-shift cubic-bezier(0.5, 0, 0.2, 1) both;
+      animation-timeline: scroll(root block);
+      animation-range: 0vh 80vh;
+    }
+    .hero-text {
+      animation: hero-text-in ease-out both;
+      animation-timeline: scroll(root block);
+      animation-range: 24vh 72vh;
+    }
+    .hero-text-late {
+      animation: fade-in linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 55vh 82vh;
+    }
+    .hero-chip--extra {
+      animation: fade-out ease-in both;
+      animation-timeline: scroll(root block);
+      animation-range: 4vh 34vh;
+    }
+    .hero-cue {
+      animation: fade-out linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0vh 12vh;
+    }
+
+    /* Teclado: si el foco entra al texto, mostrar el diseño final de inmediato */
+    .hero-scroll:has(.hero-text:focus-within) .hero-visual-col,
+    .hero-scroll:has(.hero-text:focus-within) .hero-text,
+    .hero-scroll:has(.hero-text:focus-within) .hero-text-late {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .hero-scroll:has(.hero-text:focus-within) .hero-chip--extra,
+    .hero-scroll:has(.hero-text:focus-within) .hero-cue {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+@layer components {
+  /* Titulares con la fuente del logo (Source Sans) */
+  .font-display {
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  /* Glassmorphism estilo Apple/Samsung para fondo claro */
-  .glass {
-    @apply border border-gray-200/50 bg-white/80 shadow-lg backdrop-blur-xl;
+  /* Etiqueta pequeña en mayúsculas con tipografía mono */
+  .label {
+    @apply text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground;
   }
 
-  .glass-hover {
-    @apply transition-all duration-500 ease-out hover:border-gray-300/60 hover:bg-white/90 hover:shadow-xl;
+  /* Subrayado que se dibuja al pasar el cursor */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s ease;
+  }
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
   }
 
-  /* Degradado premium azul a índigo */
-  .text-gradient {
-    @apply bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent;
-  }
-
-  /* Glow sutil estilo premium para fondo claro */
-  .glow {
-    @apply shadow-[0_0_20px_rgba(0,122,255,0.15)];
-  }
-
-  .glow-hover {
-    @apply transition-shadow duration-500 ease-out hover:shadow-[0_0_40px_rgba(0,122,255,0.25)];
-  }
-
-  /* Sombra suave para elevación en fondo claro */
-  .shadow-premium {
-    @apply shadow-[0_8px_30px_rgba(0,0,0,0.08)];
-  }
-
-  /* Hover suave estilo Apple */
-  .hover-lift {
-    @apply transition-transform duration-300 ease-out hover:-translate-y-1;
-  }
-
-  /* Animaciones personalizadas */
-  @keyframes glow {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.6;
-    }
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .animate-glow {
-    animation: glow 4s ease-in-out infinite;
-  }
-
-  .animate-gradient {
-    animation: gradient 6s ease infinite;
+  /* Balance de líneas en titulares */
+  .text-pretty-balance {
+    text-wrap: balance;
   }
 }

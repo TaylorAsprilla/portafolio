@@ -1,290 +1,72 @@
-# Portafolio Profesional - Full Stack Developer
+# Portafolio — Taylor Asprilla
 
-Portafolio profesional moderno y premium construido con Next.js 15, React, TypeScript, Tailwind CSS y Framer Motion. Diseñado para desarrolladores que ofrecen servicios de desarrollo web, móvil, software y datos.
+Portafolio profesional de **Taylor Asprilla** (Software Engineer · Full Stack Developer · Engineering Team Lead).
+Sitio estático en español con un estilo **editorial tipográfico**: titulares serif enormes, secciones numeradas, listas grandes de proyectos con vista previa al pasar el cursor, y **fondo blanco**. Listo para hosting compartido (cPanel/Apache + PHP).
 
-## ✨ Características
+- **Stack:** Next.js 15 (App Router, `output: "export"`), React 19, TypeScript, Tailwind CSS 3
+- **Tipografía (las del logo de Taylor Interactivo):** Source Sans 3 para titulares ("Taylor") y Lato para texto y etiquetas ("Interactivo"), vía `next/font`
+- **Sin precios ni tarifas** en ninguna sección
 
-- **Stack Tecnológico Premium**: Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion
-- **Diseño Moderno y Elegante**: Dark mode por defecto, glassmorphism, animaciones suaves
-- **100% Responsive**: Mobile-first, optimizado para todos los dispositivos
-- **Toggle de Moneda**: Soporte para COP y USD con conversión automática
-- **Extracción de Metadata**: Obtención automática de logos, imágenes y descripciones de proyectos
-- **SEO Optimizado**: Metadata completa, Open Graph, Twitter Cards, sitemap, robots.txt
-- **Filtrado de Proyectos**: Búsqueda y filtros por categoría
-- **Animaciones Premium**: Framer Motion para transiciones y efectos interactivos
-- **Código Profesional**: TypeScript, arquitectura limpia, componentes reutilizables
-
-## 🎯 Secciones
-
-1. **Hero** - Presentación impactante con CTAs principales
-2. **Sobre mí** - Perfil profesional y propuesta de valor
-3. **Servicios** - 10 servicios profesionales con precios
-4. **Tecnologías** - Stack técnico organizado por categorías
-5. **Proyectos** - Galería de proyectos con metadata enriquecida
-6. **Contacto** - Formulario y métodos de contacto
-
-## 🚀 Instalación y Configuración
-
-### Requisitos Previos
-
-- Node.js 18 o superior
-- npm, yarn o pnpm
-
-### Instalación
-
-1. **Clonar o descargar el proyecto**
-
-```bash
-cd portafolio
-```
-
-2. **Instalar dependencias**
+## Comandos
 
 ```bash
 npm install
-# o
-yarn install
-# o
-pnpm install
+npm run dev        # desarrollo en http://localhost:3000
+npm run build      # genera el sitio estático en out/
+npm run typecheck  # tsc --noEmit
+npm run lint       # ESLint
+npm run images     # regenera public/projects/*.webp desde las capturas originales
+npm run logo       # regenera public/logo.png y los íconos (favicon, apple-icon) desde el logo original
+npm run hero       # regenera las imágenes del hero (laptop con el logo) desde app/assets/img/logo-PC.png
 ```
 
-3. **Configurar datos personales**
+## Dónde editar cada cosa
 
-Edita los siguientes archivos con tu información:
+| Qué                                                   | Archivo                                           |
+| ----------------------------------------------------- | ------------------------------------------------- |
+| Textos (hero, sobre mí, especialidades, proyectos, stack, contacto) | `content/es.ts` (tipo en `content/types.ts`) |
+| Nombre, correo, WhatsApp, LinkedIn, GitHub, ubicación | `data/config.ts`                                  |
+| Proyectos                                             | `data/projects.ts`                                |
+| Colores (fondo blanco y paleta del logo)               | `app/globals.css` (variables) y `tailwind.config.ts` |
+| Pie de página                                         | `components/layout/footer.tsx`                    |
+| Índice numerado del hero (01–05)                      | `content/es.ts` → `nav` (el orden debe coincidir con `page.tsx`) |
+| Secciones                                             | `components/sections/*` (estructura común en `section-shell.tsx`) |
+| Imagen animada del hero (laptop) | `components/sections/hero-visual.tsx` + animaciones en `app/globals.css`; original en `app/assets/img/logo-PC.png` (no se publica, pesa 3 MB) |
+| Logo (original en `app/assets/img/logo-taylor-interactivo.png`) | `npm run logo`; se usa en favicon, ícono de Apple, JSON-LD e imagen Open Graph (ya no hay encabezado) |
+| SEO (metadatos, JSON-LD, imagen Open Graph)           | `app/layout.tsx`, `components/seo/`, `app/opengraph-image.tsx` |
 
-#### `data/config.ts`
-```typescript
-export const siteConfig: SiteConfig = {
-  name: "Tu Nombre", // ← Cambia esto
-  title: "Tu título profesional",
-  description: "Tu descripción",
-  url: "https://tu-dominio.com",
-  email: "tu@email.com",
-  phone: "+57 300 123 4567",
-  whatsapp: "573001234567",
-  social: {
-    github: "https://github.com/tuusuario",
-    linkedin: "https://linkedin.com/in/tuusuario",
-    twitter: "https://twitter.com/tuusuario",
-  },
-  exchangeRate: 4000, // Tasa de cambio COP/USD
-};
-```
+### Agregar un proyecto
 
-#### `data/services.ts`
-Personaliza tus servicios y precios
+1. Guarda la captura (PNG) en `app/assets/img/proyectos/preview/<id>.png`.
+2. Ejecuta `npm run images` (genera `public/projects/<id>.webp`, 1200×750).
+3. Agrega el objeto en `data/projects.ts` con `image: "/projects/<id>.webp"`.
+   Con `featured: true` aparece como proyecto destacado; si no, en "Otros proyectos".
 
-#### `data/projects.ts`
-Agrega tus proyectos reales
+### Versión en inglés (preparada, no activa)
 
-#### `data/skills.ts`
-Actualiza tus habilidades técnicas
+El contenido está separado en `content/es.ts`. Para activar inglés: crear `content/en.ts` con el mismo tipo `Content`,
+registrarlo en `content/index.ts` y exponer la ruta `/en` (con `alternates.languages` en el layout y el sitemap).
 
-4. **Ejecutar en desarrollo**
+## Formulario de contacto
 
-```bash
-npm run dev
-# o
-yarn dev
-# o
-pnpm dev
-```
+`public/api/contact.php` recibe el formulario (JSON por POST) y envía el correo con `mail()`.
+Incluye honeypot, límite de frecuencia por IP, validación y verificación de origen.
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+Antes de publicar, en ese archivo:
 
-## 📦 Build para Producción
+- `CONTACT_FROM` debe ser una cuenta de correo **del dominio** creada en cPanel (p. ej. `no-reply@taylorasprilla.dev`);
+  si no, muchos servidores descartan el mensaje.
+- `ALLOWED_HOSTS` ya incluye `taylorasprilla.dev` y `www`.
 
-```bash
-npm run build
-npm start
-```
+En local (`npm run dev` o XAMPP sin servidor SMTP) el envío fallará y el formulario mostrará el mensaje de error con el correo como alternativa. Es lo esperado.
 
-## 🚢 Despliegue en Vercel
+## Despliegue (hosting compartido)
 
-Este proyecto está optimizado para Vercel:
+1. `npm run build`
+2. Sube **todo el contenido de `out/`** a `public_html/` (incluye `.htaccess`, `api/contact.php` y `projects/`).
+3. Verifica HTTPS y que `https://taylorasprilla.dev/opengraph-image` devuelva una imagen PNG.
 
-1. Sube tu código a GitHub
-2. Importa el repositorio en Vercel
-3. Configura las variables de entorno si es necesario
-4. Despliega
+`public/.htaccess` configura HTTPS, compresión, caché, cabeceras de seguridad, la página 404 y el tipo MIME de la imagen Open Graph.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
-
-## 📁 Estructura del Proyecto
-
-```
-portafolio/
-├── app/                      # App Router de Next.js
-│   ├── layout.tsx           # Layout principal
-│   ├── page.tsx             # Página de inicio
-│   ├── globals.css          # Estilos globales
-│   ├── sitemap.ts           # Sitemap para SEO
-│   └── robots.ts            # Robots.txt
-├── components/              # Componentes React
-│   ├── sections/            # Secciones del portafolio
-│   │   ├── hero-section.tsx
-│   │   ├── about-section.tsx
-│   │   ├── services-section.tsx
-│   │   ├── skills-section.tsx
-│   │   ├── projects-section.tsx
-│   │   └── contact-section.tsx
-│   ├── ui/                  # Componentes UI reutilizables
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── badge.tsx
-│   │   ├── input.tsx
-│   │   ├── textarea.tsx
-│   │   ├── section.tsx
-│   │   └── container.tsx
-│   ├── header.tsx           # Navegación principal
-│   ├── footer.tsx           # Pie de página
-│   ├── currency-provider.tsx # Context de moneda
-│   └── currency-toggle.tsx  # Toggle COP/USD
-├── data/                    # Datos semilla
-│   ├── config.ts            # Configuración general
-│   ├── services.ts          # Servicios ofrecidos
-│   ├── projects.ts          # Proyectos realizados
-│   └── skills.ts            # Habilidades técnicas
-├── lib/                     # Utilidades
-│   ├── utils.ts             # Funciones auxiliares
-│   ├── currency.ts          # Lógica de moneda
-│   └── metadata/
-│       └── extractor.ts     # Extractor de metadata
-├── types/                   # Tipos TypeScript
-│   └── index.ts
-├── public/                  # Archivos estáticos
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-├── next.config.ts
-└── README.md
-```
-
-## 🎨 Personalización
-
-### Colores y Tema
-
-Edita `app/globals.css` para cambiar los colores del tema:
-
-```css
-:root {
-  --primary: 217.2 91.2% 59.8%;
-  --background: 222.2 84% 4.9%;
-  /* ... */
-}
-```
-
-### Animaciones
-
-Las animaciones se definen en `tailwind.config.ts` y se utilizan con Framer Motion en los componentes.
-
-### Servicios y Precios
-
-Edita `data/services.ts` para agregar, eliminar o modificar servicios:
-
-```typescript
-{
-  id: "mi-servicio",
-  name: "Mi Servicio",
-  description: "Descripción del servicio",
-  benefits: ["Beneficio 1", "Beneficio 2"],
-  technologies: ["Tech 1", "Tech 2"],
-  price: {
-    baseAmount: 1000,
-    baseCurrency: "USD",
-    isRange: true,
-  },
-  category: "web",
-}
-```
-
-### Proyectos
-
-Agrega tus proyectos en `data/projects.ts`:
-
-```typescript
-{
-  id: "mi-proyecto",
-  name: "Mi Proyecto",
-  url: "https://miproyecto.com",
-  domain: "miproyecto.com",
-  category: "web-corporativa",
-  shortDescription: "Descripción breve",
-  tags: ["Tag1", "Tag2"],
-  stack: ["React", "Node.js"],
-  featured: true,
-  year: 2024,
-}
-```
-
-El sistema intentará extraer automáticamente:
-- Logo/favicon
-- Imagen de preview (og:image)
-- Título y descripción
-- Metadata adicional
-
-## 🔧 Características Técnicas
-
-### Extractor de Metadata
-
-El sistema incluye un extractor server-side que obtiene información de sitios web:
-
-- Ejecuta solo en el servidor (seguro)
-- Timeout de 10 segundos por sitio
-- Manejo de errores robusto
-- Cache opcional en memoria
-- Fallback elegante si falla
-
-### Sistema de Moneda
-
-- Context API de React para estado global
-- Conversión automática COP ↔ USD
-- Toggle animado con Framer Motion
-- Formateo correcto con Intl.NumberFormat
-- Tasa de cambio configurable
-
-### SEO y Performance
-
-- Server Components por defecto
-- Metadata optimizada
-- Open Graph y Twitter Cards
-- Sitemap automático
-- Robots.txt
-- Imágenes optimizadas con next/image
-- CSS-in-JS con Tailwind
-
-## 🎯 Próximas Mejoras
-
-Ideas para expandir el proyecto:
-
-- [ ] Integrar CMS headless (Sanity, Contentful, Strapi)
-- [ ] Blog con MDX
-- [ ] API de contacto con email transaccional
-- [ ] Analytics (Google Analytics, Plausible)
-- [ ] Tests con Jest y Testing Library
-- [ ] A11y completo (accesibilidad)
-- [ ] i18n (multiidioma)
-- [ ] Panel de administración
-- [ ] Temas claro/oscuro personalizables
-- [ ] Más animaciones y micro-interacciones
-
-## 📝 Licencia
-
-Proyecto de código abierto - úsalo como template para tu portafolio.
-
-## 🤝 Contribuciones
-
-Este es un template personal, pero las sugerencias son bienvenidas.
-
-## 📧 Soporte
-
-Si tienes preguntas sobre el proyecto, personalízalo según tus necesidades o consulta la documentación oficial de:
-
-- [Next.js](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [Framer Motion](https://www.framer.com/motion/)
-- [TypeScript](https://www.typescriptlang.org/docs/)
-
----
-
-⚡ **Hecho con Next.js, React, TypeScript y mucho ☕**
+> Los demás documentos de la raíz (`EJEMPLOS.md`, `NOTAS.md`, `QUICKSTART.md`, `INSTALACION.md`, `SEO-GUIDE.md`, `DEPLOY*.md`, `HOSTING*.md`)
+> son del diseño anterior y pueden mencionar precios, el toggle de moneda o la estructura vieja. Este README es la referencia vigente.

@@ -1,119 +1,90 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Mail, Phone, MessageSquare } from "lucide-react";
-import { Container } from "@/components/ui/container";
-import { Section, SectionHeader } from "@/components/ui/section";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { SectionShell } from "@/components/sections/section-shell";
+import { Reveal } from "@/components/ui/reveal";
+import { ContactForm } from "@/components/sections/contact-form";
 import { siteConfig } from "@/data/config";
+import type { Content } from "@/content";
 
-export function ContactSection() {
-  const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=Hola,%20estoy%20interesado%20en%20tus%20servicios`;
+interface RowProps {
+  label: string;
+  value: string;
+  href?: string;
+  external?: boolean;
+}
+
+function Row({ label, value, href, external }: RowProps) {
+  const body = (
+    <>
+      <span className="label">{label}</span>
+      <span className="flex items-center gap-2 text-base text-foreground">
+        {value}
+        {external && (
+          <ArrowUpRight
+            aria-hidden="true"
+            className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
+          />
+        )}
+      </span>
+      {external && <span className="sr-only">(se abre en una pestaña nueva)</span>}
+    </>
+  );
+
+  const cls = "group flex items-baseline justify-between gap-6 border-t border-border py-4";
+
+  if (!href) return <div className={cls}>{body}</div>;
 
   return (
-    <Section id="contacto" className="bg-muted/30">
-      <Container>
-        <SectionHeader
-          title="Contacto"
-          description="¿Tienes un proyecto en mente? Conversemos y hagámoslo realidad"
-        />
+    <a
+      href={href}
+      className={`${cls} rounded-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {body}
+    </a>
+  );
+}
 
-        <div className="mx-auto max-w-4xl space-y-8">
-          {/* CTA Principal WhatsApp */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
-          >
-            <Button
-              size="lg"
-              className="group h-16 gap-3 bg-green-500 px-8 text-lg font-semibold transition-all hover:bg-green-600 hover:shadow-2xl hover:shadow-green-500/30 active:scale-95"
-              asChild
-            >
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                <MessageSquare className="h-6 w-6" />
-                Contactar por WhatsApp
-              </a>
-            </Button>
-            <p className="mt-4 text-sm text-muted-foreground">Respuesta en menos de 24 horas</p>
-          </motion.div>
+export function ContactSection({ content }: { content: Content["contact"] }) {
+  return (
+    <SectionShell
+      id="contacto"
+      number="04"
+      titleId="contact-title"
+      eyebrow={content.eyebrow}
+      title={content.title}
+      description={content.description}
+    >
+      <Reveal>
+        <a
+          href={`mailto:${siteConfig.email}`}
+          className="link-underline inline-block break-all rounded-sm pb-1 font-display text-3xl font-bold transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-4xl lg:text-5xl"
+        >
+          {siteConfig.email}
+        </a>
+      </Reveal>
 
-          {/* Información de contacto */}
-          <div className="grid gap-6 md:grid-cols-2">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="glass h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <CardHeader>
-                  <CardTitle>Información de contacto</CardTitle>
-                  <CardDescription>
-                    Disponibilidad para nuevos proyectos y colaboraciones
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <a
-                    href={`mailto:${siteConfig.email}`}
-                    className="group flex items-center gap-4 rounded-lg p-3 transition-colors hover:bg-primary/10"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20">
-                      <Mail className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <p className="text-sm text-muted-foreground group-hover:text-primary">
-                        {siteConfig.email}
-                      </p>
-                    </div>
-                  </a>
+      <div className="mt-16 grid gap-14 lg:mt-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <Reveal>
+          <ul className="border-b border-border">
+            <li>
+              <Row label={content.channels.whatsapp} value={siteConfig.whatsappDisplay} href={`https://wa.me/${siteConfig.whatsapp}`} external />
+            </li>
+            <li>
+              <Row label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
+            </li>
+            <li>
+              <Row label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
+            </li>
+            <li>
+              <Row label={content.channels.location} value={siteConfig.location} />
+            </li>
+          </ul>
+        </Reveal>
 
-                  {siteConfig.phone && (
-                    <a
-                      href={`tel:${siteConfig.phone}`}
-                      className="group flex items-center gap-4 rounded-lg p-3 transition-colors hover:bg-primary/10"
-                    >
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20">
-                        <Phone className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-medium">Teléfono</p>
-                        <p className="text-sm text-muted-foreground group-hover:text-primary">
-                          {siteConfig.phone}
-                        </p>
-                      </div>
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="glass glow h-full transition-all duration-300 hover:-translate-y-1">
-                <CardContent className="p-6">
-                  <h3 className="mb-4 text-xl font-semibold">¿Por qué trabajar conmigo?</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>✓ Entrega a tiempo y presupuesto transparente</li>
-                    <li>✓ Comunicación clara durante todo el proyecto</li>
-                    <li>✓ Código de alta calidad y documentado</li>
-                    <li>✓ Soporte post-lanzamiento incluido</li>
-                    <li>✓ Experiencia con proyectos reales exitosos</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </Container>
-    </Section>
+        <Reveal delay={0.08}>
+          <ContactForm labels={content.form} />
+        </Reveal>
+      </div>
+    </SectionShell>
   );
 }

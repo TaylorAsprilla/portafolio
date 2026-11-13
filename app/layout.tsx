@@ -1,16 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Lato, Source_Sans_3 } from "next/font/google";
+import { preload } from "react-dom";
 import "./globals.css";
 import { siteConfig } from "@/data/config";
-import { CurrencyProvider } from "@/components/currency-provider";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import { getContent } from "@/content";
+import { Footer } from "@/components/layout/footer";
 import { StructuredData } from "@/components/seo/structured-data";
 
-const inter = Inter({ subsets: ["latin"] });
+/* Fuentes del logo: "Taylor" → Source Sans (Bold); "Interactivo" → Lato. */
+const display = Source_Sans_3({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+const sans = Lato({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
-  themeColor: "#3b82f6",
+  themeColor: "#FFFFFF",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export const metadata: Metadata = {
@@ -21,92 +30,45 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    // Servicios principales
-    "desarrollo web",
-    "desarrollo móvil",
+    "Taylor Asprilla",
+    "soluciones de IA",
+    "inteligencia artificial",
+    "integración de IA",
+    "asistentes con IA",
+    "chatbots",
+    "automatización de procesos",
+    "automatización con IA",
+    "software a medida",
     "desarrollo de software",
-    "aplicaciones web",
-    "aplicaciones móviles",
-    "desarrollo full stack",
-
-    // Tecnologías
+    "Software Engineer",
+    "Full Stack Developer",
+    "Engineering Team Lead",
+    "ingeniería de datos",
     "Next.js",
     "React",
     "TypeScript",
     "Node.js",
-    "JavaScript",
-    "Tailwind CSS",
-
-    // Especialidades
-    "integración de IA",
-    "inteligencia artificial",
-    "automatización de procesos",
-    "desarrollo de APIs",
-    "arquitectura de software",
-    "desarrollo escalable",
-
-    // Tipos de proyectos
-    "landing pages",
-    "sitios web corporativos",
-    "e-commerce",
-    "CRM",
-    "sistemas empresariales",
-    "PWA",
-
-    // Ubicación y alcance
-    "freelance",
-    "remoto",
+    "Bogotá",
     "Colombia",
-    "internacional",
-    "USA",
-    "Europa",
-    "Latinoamérica",
-
-    // SEO técnico
-    "desarrollo frontend",
-    "desarrollo backend",
-    "diseño web moderno",
-    "UX/UI",
   ],
+
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
-  icons: {
-    icon: [{ url: "/icon.png", sizes: "32x32", type: "image/png" }],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-  },
-  manifest: "/manifest.json",
-  alternates: {
-    canonical: siteConfig.url,
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    locale: "es_ES",
+    locale: "es_CO",
     alternateLocale: ["en_US"],
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: `${siteConfig.url}icon.png`,
-        width: 1200,
-        height: 630,
-        alt: "Desarrollo Web y Móvil Profesional",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}icon.png`],
-    creator: "@TaylorAsprilla",
-  },
-  verification: {
-    google: "google-site-verification-code",
-    // yandex: "yandex-verification",
-    // bing: "msvalidate.01",
   },
   robots: {
     index: true,
@@ -119,26 +81,35 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  manifest: "/manifest.json",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const content = getContent();
+
+  // La imagen del hero es el elemento más grande de la primera pantalla (LCP): se pide cuanto antes.
+  preload("/hero-laptop-1400.webp", {
+    as: "image",
+    fetchPriority: "high",
+    imageSrcSet: "/hero-laptop-760.webp 760w, /hero-laptop-1400.webp 1400w",
+    imageSizes: "(min-width: 1024px) 46vw, 92vw",
+  });
+
   return (
-    <html lang="es" className="dark scroll-smooth">
-      <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <html lang={content.lang} className={`${sans.variable} ${display.variable}`}>
+      <body className="font-sans">
+        <a
+          href="#contenido"
+          className="sr-only z-[60] rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          {content.ui.skip}
+        </a>
+        <main id="contenido">{children}</main>
+        <Footer content={content.footer} backToTop={content.ui.backToTop} />
         <StructuredData />
-      </head>
-      <body className={inter.className}>
-        <CurrencyProvider>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </CurrencyProvider>
+        <noscript>
+          <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </body>
     </html>
   );

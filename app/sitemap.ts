@@ -3,39 +3,15 @@ import { siteConfig } from "@/data/config";
 
 export const dynamic = "force-static";
 
+// Sitio de una sola página: las secciones (#anclas) no son URLs indexables distintas.
+// Al agregar la versión en inglés (/en/) añadirla aquí con `alternates.languages`.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = siteConfig.url;
-
   return [
     {
-      url: baseUrl,
+      url: siteConfig.url,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 1,
-    },
-    {
-      url: `${baseUrl}#sobre-mi`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#servicios`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}#proyectos`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#contacto`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
     },
   ];
 }

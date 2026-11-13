@@ -1,17 +1,18 @@
 import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
-  name: "Taylor Asprilla Bohórquez",
-  title: "Desarrollo Web, Móvil e IA | Soluciones Digitales Profesionales",
+  name: "Taylor Asprilla",
+  jobTitle: "Software Engineer | Full Stack Developer | Engineering Team Lead",
+  title: "Taylor Asprilla | Soluciones de IA, Automatización y Desarrollo de Software",
   description:
-    "Servicios profesionales de desarrollo web, aplicaciones móviles, integración de IA y automatización. Creamos soluciones digitales escalables con Next.js, React, TypeScript y tecnologías modernas. Proyectos en USA, Europa y Latinoamérica.",
+    "Soluciones de inteligencia artificial, automatización de procesos y software a medida para empresas. Taylor Asprilla, ingeniero de software Full Stack en Bogotá, Colombia.",
   url: "https://taylorasprilla.dev/",
   email: "taylor.asprilla@gmail.com",
-  phone: "+57 311 887 3332",
   whatsapp: "573118873332",
+  whatsappDisplay: "+57 311 887 3332",
+  location: "Bogotá, Colombia",
   social: {
     github: "https://github.com/TaylorAsprilla",
     linkedin: "https://linkedin.com/in/TaylorAsprilla",
   },
-  exchangeRate: 3700, // 1 USD = 4000 COP
 };

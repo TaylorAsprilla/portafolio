@@ -178,16 +178,10 @@ export const en: Content = {
     title: "Let's talk.",
     description:
       "Have a project, a technical challenge or an opportunity? Tell me the context and I will reply personally.",
-    form: {
-      name: "Name",
-      email: "Email",
-      message: "Message",
-      messagePlaceholder: "Tell me about your project or what you need…",
-      send: "Send message",
-      sending: "Sending…",
-      success: "Thank you! I received your message and will reply soon.",
-      error: "I couldn't send the message.",
-      fallback: "Write to me directly by email",
+    chat: {
+      label: "Message me directly",
+      whatsapp: "Message me on WhatsApp",
+      telegram: "Message me on Telegram",
     },
     channels: { email: "Email", whatsapp: "WhatsApp", location: "Location" },
   },

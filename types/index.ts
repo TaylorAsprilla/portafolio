@@ -30,6 +30,7 @@ export interface SiteConfig {
   email: string;
   whatsapp: string;
   whatsappDisplay: string;
+  telegram: string;
   location: string;
   social: {
     github: string;

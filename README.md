@@ -42,28 +42,20 @@ npm run hero       # regenera las imágenes del hero (laptop con el logo) desde 
 3. Agrega el objeto en `data/projects.ts` con `image: "/projects/<id>.webp"`.
    Con `featured: true` aparece como proyecto destacado; si no, en "Otros proyectos".
 
-### Versión en inglés (preparada, no activa)
+### Idiomas
 
-El contenido está separado en `content/es.ts`. Para activar inglés: crear `content/en.ts` con el mismo tipo `Content`,
-registrarlo en `content/index.ts` y exponer la ruta `/en` (con `alternates.languages` en el layout y el sitemap).
+Español en `/` e inglés en `/en/`. El contenido está en `content/es.ts` y `content/en.ts` (mismo tipo `Content`);
+los textos de los proyectos están en `data/projects.ts`. Cada idioma tiene su layout raíz en `app/(es)/` y `app/en/`.
 
-## Formulario de contacto
+## Contacto
 
-`public/api/contact.php` recibe el formulario (JSON por POST) y envía el correo con `mail()`.
-Incluye honeypot, límite de frecuencia por IP, validación y verificación de origen.
-
-Antes de publicar, en ese archivo:
-
-- `CONTACT_FROM` debe ser una cuenta de correo **del dominio** creada en cPanel (p. ej. `no-reply@taylorasprilla.dev`);
-  si no, muchos servidores descartan el mensaje.
-- `ALLOWED_HOSTS` ya incluye `taylorasprilla.dev` y `www`.
-
-En local (`npm run dev` o XAMPP sin servidor SMTP) el envío fallará y el formulario mostrará el mensaje de error con el correo como alternativa. Es lo esperado.
+No hay formulario ni servidor: la sección de contacto usa el correo (`mailto:`) y botones directos a WhatsApp y Telegram.
+Los datos están en `data/config.ts` (`email`, `whatsapp`, `telegram`).
 
 ## Despliegue (hosting compartido)
 
 1. `npm run build`
-2. Sube **todo el contenido de `out/`** a `public_html/` (incluye `.htaccess`, `api/contact.php` y `projects/`).
+2. Sube **todo el contenido de `out/`** a `public_html/` (incluye `.htaccess` y `projects/`).
 3. Verifica HTTPS y que `https://taylorasprilla.dev/opengraph-image` devuelva una imagen PNG.
 
 `public/.htaccess` configura HTTPS, compresión, caché, cabeceras de seguridad, la página 404 y el tipo MIME de la imagen Open Graph.

@@ -1,13 +1,12 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
+import { getContent, type Locale } from "@/content";
 
-export const dynamic = "force-static";
-export const alt = "Taylor Asprilla — Software Engineer, Full Stack Developer y Engineering Team Lead";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const ogSize = { width: 1200, height: 630 };
 
-export default async function OpenGraphImage() {
+export async function renderOgImage(locale: Locale) {
+  const { meta } = getContent(locale);
   // El logo se incrusta como data URI (se genera una sola vez durante el build)
   const logo = await readFile(path.join(process.cwd(), "public", "logo.png"));
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
@@ -39,17 +38,13 @@ export default async function OpenGraphImage() {
           <div style={{ fontSize: 96, fontWeight: 700, letterSpacing: -3, lineHeight: 1.02, color: "#3F5EA8" }}>
             Taylor Asprilla
           </div>
-          <div style={{ marginTop: 20, fontSize: 38, color: "#141B2E" }}>
-            Soluciones de IA y automatización
-          </div>
-          <div style={{ marginTop: 8, fontSize: 38, color: "#5B6480" }}>Software Engineer · Full Stack Developer</div>
+          <div style={{ marginTop: 20, fontSize: 38, color: "#141B2E" }}>{meta.ogHeadline}</div>
+          <div style={{ marginTop: 8, fontSize: 38, color: "#5B6480" }}>{meta.ogSubtitle}</div>
         </div>
 
-        <div style={{ fontSize: 26, color: "#7B84A0" }}>
-          Agentes de IA · Automatización de procesos · Software a medida
-        </div>
+        <div style={{ fontSize: 26, color: "#7B84A0" }}>{meta.ogFooter}</div>
       </div>
     ),
-    size
+    ogSize
   );
 }

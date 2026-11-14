@@ -6,13 +6,14 @@ import { siteConfig } from "@/data/config";
 import type { Content } from "@/content";
 
 interface RowProps {
+  newTab: string;
   label: string;
   value: string;
   href?: string;
   external?: boolean;
 }
 
-function Row({ label, value, href, external }: RowProps) {
+function Row({ newTab, label, value, href, external }: RowProps) {
   const body = (
     <>
       <span className="label">{label}</span>
@@ -25,7 +26,7 @@ function Row({ label, value, href, external }: RowProps) {
           />
         )}
       </span>
-      {external && <span className="sr-only">(se abre en una pestaña nueva)</span>}
+      {external && <span className="sr-only">{newTab}</span>}
     </>
   );
 
@@ -44,7 +45,13 @@ function Row({ label, value, href, external }: RowProps) {
   );
 }
 
-export function ContactSection({ content }: { content: Content["contact"] }) {
+export function ContactSection({
+  content,
+  newTab,
+}: {
+  content: Content["contact"];
+  newTab: string;
+}) {
   return (
     <SectionShell
       id="contacto"
@@ -67,16 +74,16 @@ export function ContactSection({ content }: { content: Content["contact"] }) {
         <Reveal>
           <ul className="border-b border-border">
             <li>
-              <Row label={content.channels.whatsapp} value={siteConfig.whatsappDisplay} href={`https://wa.me/${siteConfig.whatsapp}`} external />
+              <Row newTab={newTab} label={content.channels.whatsapp} value={siteConfig.whatsappDisplay} href={`https://wa.me/${siteConfig.whatsapp}`} external />
             </li>
             <li>
-              <Row label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
+              <Row newTab={newTab} label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
             </li>
             <li>
-              <Row label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
+              <Row newTab={newTab} label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
             </li>
             <li>
-              <Row label={content.channels.location} value={siteConfig.location} />
+              <Row newTab={newTab} label={content.channels.location} value={siteConfig.location} />
             </li>
           </ul>
         </Reveal>

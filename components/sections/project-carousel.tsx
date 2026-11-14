@@ -4,11 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Content } from "@/content";
 import type { Project } from "@/types";
 
 interface ProjectCarouselProps {
   projects: Project[];
-  visitLabel: string;
+  ui: Pick<Content["ui"], "visit" | "newTab" | "techLabel" | "shotAlt">;
   label: string;
   prevLabel: string;
   nextLabel: string;
@@ -20,7 +21,7 @@ interface ProjectCarouselProps {
  */
 export function ProjectCarousel({
   projects,
-  visitLabel,
+  ui,
   label,
   prevLabel,
   nextLabel,
@@ -101,14 +102,14 @@ export function ProjectCarousel({
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${project.name}: ${visitLabel.toLowerCase()} (se abre en una pestaña nueva)`}
+                aria-label={`${project.name}: ${ui.visit.toLowerCase()} ${ui.newTab}`}
                 className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
 
               <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-secondary">
                 <Image
                   src={project.image}
-                  alt={`Captura del sitio ${project.name}`}
+                  alt={ui.shotAlt.replace("{name}", project.name)}
                   fill
                   sizes="(min-width: 1280px) 672px, (min-width: 1024px) 576px, (min-width: 640px) 448px, 85vw"
                   className="object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.03]"
@@ -135,7 +136,7 @@ export function ProjectCarousel({
                 </p>
 
                 <ul
-                  aria-label="Tecnologías"
+                  aria-label={ui.techLabel}
                   className="mt-auto flex flex-wrap gap-x-3 gap-y-1 border-t border-border pt-5 font-sans text-xs text-muted-foreground"
                 >
                   {project.stack.map((tech, t) => (

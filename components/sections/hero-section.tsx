@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowDownRight, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { HeroVisual } from "@/components/sections/hero-visual";
 import { RotatingPhrase } from "@/components/sections/rotating-phrase";
@@ -8,23 +8,13 @@ import type { Content } from "@/content";
 /** Retraso escalonado de la animación de entrada (CSS puro, sin esperar a React). */
 const delay = (seconds: number) => ({ "--reveal-delay": `${seconds}s` }) as React.CSSProperties;
 
-const pad = (n: number) => String(n).padStart(2, "0");
-
 /**
  * Hero con "primera pantalla" de solo el laptop y las palabras flotantes. Al hacer scroll
  * (animaciones CSS ligadas al scroll, solo escritorio) el laptop pasa a la izquierda y aparece
  * el texto. En móvil, sin soporte de scroll animado o con movimiento reducido se muestra el
  * diseño final directamente (ver `.hero-scroll` en globals.css). El texto está siempre en el HTML.
  */
-export function HeroSection({
-  content,
-  nav,
-  ui,
-}: {
-  content: Content["hero"];
-  nav: Content["nav"];
-  ui: Content["ui"];
-}) {
+export function HeroSection({ content, ui }: { content: Content["hero"]; ui: Content["ui"] }) {
   return (
     <section id="inicio" aria-labelledby="hero-title" className="hero-scroll relative">
       <div className="hero-stage relative flex min-h-[100dvh] flex-col justify-center overflow-hidden pb-10 pt-16 sm:pb-14 sm:pt-20">
@@ -54,7 +44,7 @@ export function HeroSection({
               </p>
 
               <ul
-                aria-label="Servicios"
+                aria-label={ui.servicesLabel}
                 style={delay(0.2)}
                 className="hero-in label mt-6 flex flex-wrap gap-x-4 gap-y-1 text-foreground"
               >
@@ -85,32 +75,9 @@ export function HeroSection({
             </div>
 
             <div className="hero-visual-col order-1 lg:col-span-6">
-              <HeroVisual alt="Laptop mostrando el logo de Taylor Interactivo" chips={content.chips} />
+              <HeroVisual alt={ui.heroAlt} chips={content.chips} />
             </div>
           </div>
-
-          <nav
-            aria-label={ui.index}
-            style={delay(0.35)}
-            className="hero-in hero-text-late mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-border pt-5 lg:mt-16"
-          >
-            <span className="label flex items-center gap-2">
-              <ArrowDownRight aria-hidden="true" className="h-3.5 w-3.5 text-primary" />
-              {ui.index}
-            </span>
-            {nav.map((item, i) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="group flex items-baseline gap-2 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <span aria-hidden="true" className="text-[10px] text-primary">
-                  {pad(i + 1)}
-                </span>
-                {item.label}
-              </a>
-            ))}
-          </nav>
         </div>
 
         {/* Indicación de scroll (solo en la primera pantalla animada) */}

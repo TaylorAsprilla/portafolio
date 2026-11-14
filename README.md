@@ -68,5 +68,5 @@ En local (`npm run dev` o XAMPP sin servidor SMTP) el envío fallará y el formu
 
 `public/.htaccess` configura HTTPS, compresión, caché, cabeceras de seguridad, la página 404 y el tipo MIME de la imagen Open Graph.
 
-> Los demás documentos de la raíz (`EJEMPLOS.md`, `NOTAS.md`, `QUICKSTART.md`, `INSTALACION.md`, `SEO-GUIDE.md`, `DEPLOY*.md`, `HOSTING*.md`)
+> Los demás documentos de la raíz (`EJEMPLOS.md`, `NOTAS.md`, `QUICKSTART.md`, `INSTALACION.md`, `SEO-GUIDE.md`, `HOSTING*.md`)
 > son del diseño anterior y pueden mencionar precios, el toggle de moneda o la estructura vieja. Este README es la referencia vigente.

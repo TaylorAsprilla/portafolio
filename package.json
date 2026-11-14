@@ -13,9 +13,7 @@
     "hero": "node scripts/optimize-hero.mjs",
     "typecheck": "tsc --noEmit",
     "build:static": "next build",
-    "build:prod": "cross-env NODE_ENV=production next build",
-    "deploy:linux": "bash deploy.sh",
-    "deploy:windows": "deploy.bat"
+    "build:prod": "cross-env NODE_ENV=production next build"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { SectionShell } from "@/components/sections/section-shell";
 import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/data/config";
@@ -29,7 +29,7 @@ function Row({ newTab, label, value, href, external }: RowProps) {
     </>
   );
 
-  const cls = "group flex items-baseline justify-between gap-6 border-t border-border py-4";
+  const cls = "group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-border py-4";
 
   if (!href) return <div className={cls}>{body}</div>;
 
@@ -65,9 +65,9 @@ interface ChatButtonProps {
   href: string;
   label: string;
   detail: string;
-  newTab: string;
+  newTab?: string;
   icon: React.ReactNode;
-  /** Color de la marca (solo decorativo en el ícono). */
+  /** Color del ícono (marca de cada canal). */
   brand: string;
 }
 
@@ -75,26 +75,29 @@ function ChatButton({ href, label, detail, newTab, icon, brand }: ChatButtonProp
   return (
     <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex items-center gap-5 rounded-2xl border border-border bg-background p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6"
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="group relative flex h-full flex-col gap-6 rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-7"
     >
-      <span
-        aria-hidden="true"
-        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-white sm:h-16 sm:w-16"
-        style={{ backgroundColor: brand }}
-      >
-        {icon}
+      <span className="flex items-start justify-between">
+        <span
+          aria-hidden="true"
+          className="flex h-14 w-14 items-center justify-center rounded-xl text-white"
+          style={{ backgroundColor: brand }}
+        >
+          {icon}
+        </span>
+        <ArrowUpRight
+          aria-hidden="true"
+          className="h-6 w-6 text-muted-foreground transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary"
+        />
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block font-display text-xl font-bold leading-tight sm:text-2xl">{label}</span>
-        <span className="mt-1 block text-sm text-muted-foreground">{detail}</span>
+      <span className="mt-auto block">
+        <span className="block font-display text-2xl font-bold leading-tight transition-colors duration-300 group-hover:text-primary">
+          {label}
+        </span>
+        <span className="mt-1.5 block break-all text-sm text-muted-foreground">{detail}</span>
       </span>
-      <ArrowUpRight
-        aria-hidden="true"
-        className="h-6 w-6 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary"
-      />
-      <span className="sr-only">{newTab}</span>
+      {newTab && <span className="sr-only">{newTab}</span>}
     </a>
   );
 }
@@ -116,51 +119,48 @@ export function ContactSection({
       description={content.description}
     >
       <Reveal>
-        <a
-          href={`mailto:${siteConfig.email}`}
-          className="link-underline inline-block break-all rounded-sm pb-1 font-display text-3xl font-bold transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-4xl lg:text-5xl"
-        >
-          {siteConfig.email}
-        </a>
+        <p className="label mb-5">{content.chat.label}</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          <ChatButton
+            href={`https://wa.me/${siteConfig.whatsapp}`}
+            label={content.chat.whatsapp}
+            detail={siteConfig.whatsappDisplay}
+            newTab={newTab}
+            brand="#25D366"
+            icon={<WhatsAppIcon className="h-8 w-8" />}
+          />
+          <ChatButton
+            href={`https://t.me/+${siteConfig.telegram}`}
+            label={content.chat.telegram}
+            detail={siteConfig.whatsappDisplay}
+            newTab={newTab}
+            brand="#229ED9"
+            icon={<TelegramIcon className="h-8 w-8" />}
+          />
+          <ChatButton
+            href={`mailto:${siteConfig.email}`}
+            label={content.chat.email}
+            detail={siteConfig.email}
+            brand="hsl(var(--primary))"
+            icon={<Mail aria-hidden="true" className="h-7 w-7" />}
+          />
+        </div>
       </Reveal>
 
-      <div className="mt-16 grid gap-14 lg:mt-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <Reveal>
-          <ul className="border-b border-border">
-            <li>
-              <Row newTab={newTab} label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
-            </li>
-            <li>
-              <Row newTab={newTab} label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
-            </li>
-            <li>
-              <Row newTab={newTab} label={content.channels.location} value={siteConfig.location} />
-            </li>
-          </ul>
-        </Reveal>
-
-        <Reveal delay={0.08}>
-          <p className="label mb-5">{content.chat.label}</p>
-          <div className="grid gap-4">
-            <ChatButton
-              href={`https://wa.me/${siteConfig.whatsapp}`}
-              label={content.chat.whatsapp}
-              detail={siteConfig.whatsappDisplay}
-              newTab={newTab}
-              brand="#25D366"
-              icon={<WhatsAppIcon className="h-8 w-8 sm:h-9 sm:w-9" />}
-            />
-            <ChatButton
-              href={`https://t.me/+${siteConfig.telegram}`}
-              label={content.chat.telegram}
-              detail={siteConfig.whatsappDisplay}
-              newTab={newTab}
-              brand="#229ED9"
-              icon={<TelegramIcon className="h-8 w-8 sm:h-9 sm:w-9" />}
-            />
-          </div>
-        </Reveal>
-      </div>
+      <Reveal delay={0.08} className="mt-14 lg:mt-20">
+        <p className="label mb-2">{content.chat.more}</p>
+        <ul className="grid gap-x-10 sm:grid-cols-3">
+          <li>
+            <Row newTab={newTab} label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
+          </li>
+          <li>
+            <Row newTab={newTab} label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
+          </li>
+          <li>
+            <Row newTab={newTab} label={content.channels.location} value={siteConfig.location} />
+          </li>
+        </ul>
+      </Reveal>
     </SectionShell>
   );
 }

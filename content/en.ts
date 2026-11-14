@@ -182,6 +182,8 @@ export const en: Content = {
       label: "Message me directly",
       whatsapp: "Message me on WhatsApp",
       telegram: "Message me on Telegram",
+      email: "Email me",
+      more: "You can also find me on",
     },
     channels: { email: "Email", whatsapp: "WhatsApp", location: "Location" },
   },

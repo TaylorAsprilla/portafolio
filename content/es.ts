@@ -182,6 +182,8 @@ export const es: Content = {
       label: "Escríbeme directo",
       whatsapp: "Escríbeme por WhatsApp",
       telegram: "Escríbeme por Telegram",
+      email: "Escríbeme por correo",
+      more: "También me encuentras en",
     },
     channels: { email: "Correo", whatsapp: "WhatsApp", location: "Ubicación" },
   },

@@ -76,7 +76,7 @@ export interface Content {
     title: string;
     description: string;
     /** Botones de mensajería directa. */
-    chat: { label: string; whatsapp: string; telegram: string };
+    chat: { label: string; whatsapp: string; telegram: string; email: string; more: string };
     channels: { email: string; whatsapp: string; location: string };
   };
   footer: { rights: string };

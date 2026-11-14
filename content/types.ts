@@ -75,17 +75,8 @@ export interface Content {
     eyebrow: string;
     title: string;
     description: string;
-    form: {
-      name: string;
-      email: string;
-      message: string;
-      messagePlaceholder: string;
-      send: string;
-      sending: string;
-      success: string;
-      error: string;
-      fallback: string;
-    };
+    /** Botones de mensajería directa. */
+    chat: { label: string; whatsapp: string; telegram: string; email: string; more: string };
     channels: { email: string; whatsapp: string; location: string };
   };
   footer: { rights: string };

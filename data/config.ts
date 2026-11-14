@@ -10,6 +10,8 @@ export const siteConfig: SiteConfig = {
   email: "cuentame@taylorasprilla.dev",
   whatsapp: "573118873332",
   whatsappDisplay: "+57 311 887 3332",
+  /** Número en formato internacional; abre el chat en t.me si el número tiene Telegram. */
+  telegram: "573118873332",
   location: "Bogotá, Colombia",
   social: {
     github: "https://github.com/TaylorAsprilla",

@@ -178,16 +178,12 @@ export const es: Content = {
     title: "Conversemos.",
     description:
       "¿Tienes un proyecto, un reto técnico o una oportunidad? Cuéntame el contexto y te respondo personalmente.",
-    form: {
-      name: "Nombre",
-      email: "Correo electrónico",
-      message: "Mensaje",
-      messagePlaceholder: "Cuéntame sobre tu proyecto o tu necesidad…",
-      send: "Enviar mensaje",
-      sending: "Enviando…",
-      success: "¡Gracias! Recibí tu mensaje y te responderé pronto.",
-      error: "No pude enviar el mensaje.",
-      fallback: "Escríbeme directamente por correo",
+    chat: {
+      label: "Escríbeme directo",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "Correo",
+      more: "También me encuentras en",
     },
     channels: { email: "Correo", whatsapp: "WhatsApp", location: "Ubicación" },
   },

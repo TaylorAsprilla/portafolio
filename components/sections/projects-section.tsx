@@ -7,10 +7,10 @@ import type { Project } from "@/types";
 interface ProjectsSectionProps {
   content: Content["projects"];
   projects: Project[];
-  visitLabel: string;
+  ui: Content["ui"];
 }
 
-export function ProjectsSection({ content, projects, visitLabel }: ProjectsSectionProps) {
+export function ProjectsSection({ content, projects, ui }: ProjectsSectionProps) {
   // Destacados primero, manteniendo el orden original dentro de cada grupo
   const ordered = [...projects.filter((p) => p.featured), ...projects.filter((p) => !p.featured)];
 
@@ -27,7 +27,7 @@ export function ProjectsSection({ content, projects, visitLabel }: ProjectsSecti
       <Reveal>
         <ProjectCarousel
           projects={ordered}
-          visitLabel={visitLabel}
+          ui={ui}
           label={content.carouselLabel}
           prevLabel={content.prev}
           nextLabel={content.next}

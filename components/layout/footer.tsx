@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ArrowUp } from "lucide-react";
-import { siteConfig } from "@/data/config";
 import type { Content } from "@/content";
 
 export function Footer({ content, backToTop }: { content: Content["footer"]; backToTop: string }) {

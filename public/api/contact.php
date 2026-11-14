@@ -5,7 +5,7 @@
  * `website` es un honeypot: debe llegar vacío.
  */
 
-const CONTACT_TO = 'taylor.asprilla@gmail.com';
+const CONTACT_TO = 'cuentame@taylorasprilla.dev';
 const CONTACT_FROM = 'no-reply@taylorasprilla.dev'; // debe ser un correo del dominio en cPanel
 const ALLOWED_HOSTS = ['taylorasprilla.dev', 'www.taylorasprilla.dev', 'localhost'];
 const THROTTLE_SECONDS = 30;

@@ -5,9 +5,37 @@ export interface Content {
   ui: {
     skip: string;
     index: string;
+    openMenu: string;
+    closeMenu: string;
     backToTop: string;
     visit: string;
     scrollHint: string;
+    /** Texto oculto para enlaces que abren en pestaña nueva. */
+    newTab: string;
+    techLabel: string;
+    servicesLabel: string;
+    heroAlt: string;
+    /** "{name}" se sustituye por el nombre del proyecto. */
+    shotAlt: string;
+    homeLabel: string;
+    /** Nombre del idioma al que cambia el selector (para lectores de pantalla). */
+    switchLang: string;
+    /** Código corto del idioma actual y del alternativo. */
+    langCode: string;
+    altLangCode: string;
+  };
+  /** SEO, metadatos y datos estructurados. */
+  meta: {
+    title: string;
+    description: string;
+    ogLocale: string;
+    jobTitle: string;
+    serviceName: string;
+    serviceTypes: string[];
+    ogAlt: string;
+    ogHeadline: string;
+    ogSubtitle: string;
+    ogFooter: string;
   };
   hero: {
     /** Texto oculto que acompaña al nombre en el <h1> (para SEO y lectores de pantalla). */

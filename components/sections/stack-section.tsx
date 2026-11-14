@@ -1,14 +1,4 @@
-import {
-  BarChart3,
-  Cloud,
-  Database,
-  GitBranch,
-  Monitor,
-  Server,
-  Sparkles,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
+import { BarChart3, Cloud, Database, Monitor, Server, Sparkles, type LucideIcon } from "lucide-react";
 import { SectionShell } from "@/components/sections/section-shell";
 import { SpecialtyCard } from "@/components/sections/specialty-card";
 import { Reveal } from "@/components/ui/reveal";
@@ -16,27 +6,16 @@ import { cn } from "@/lib/utils";
 import type { Content } from "@/content";
 
 /** Ícono de cada grupo, en el mismo orden que `content.stack.groups`. */
-const ICONS: LucideIcon[] = [
-  Sparkles,
-  Monitor,
-  Server,
-  Database,
-  Cloud,
-  GitBranch,
-  BarChart3,
-  Wrench,
-];
+const ICONS: LucideIcon[] = [Sparkles, Monitor, Server, Database, Cloud, BarChart3];
 
 /** Ancho de cada grupo en la cuadrícula de 3 columnas (escritorio), en el mismo orden que los grupos. */
 const SPAN = [
-  "md:col-span-2 lg:col-span-3",
-  "lg:col-span-2",
+  "md:col-span-2 lg:col-span-3", // IA: fila completa
   "",
   "",
   "",
-  "",
-  "",
-  "md:col-span-2 lg:col-span-2",
+  "lg:col-span-2", // Cloud y DevOps
+  "md:col-span-2 lg:col-span-1", // Datos
 ];
 
 export function StackSection({ content }: { content: Content["stack"] }) {

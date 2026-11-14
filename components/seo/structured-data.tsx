@@ -1,7 +1,9 @@
 import { siteConfig } from "@/data/config";
+import { getContent, type Locale } from "@/content";
 
 /** Datos estructurados (JSON-LD): Person + WebSite. */
-export function StructuredData() {
+export function StructuredData({ locale }: { locale: Locale }) {
+  const { meta } = getContent(locale);
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -12,8 +14,8 @@ export function StructuredData() {
         url: siteConfig.url,
         image: `${siteConfig.url}logo.png`,
         email: siteConfig.email,
-        jobTitle: "Software Engineer y Engineering Team Lead",
-        description: siteConfig.description,
+        jobTitle: meta.jobTitle,
+        description: meta.description,
         address: {
           "@type": "PostalAddress",
           addressLocality: "Bogotá",
@@ -46,24 +48,18 @@ export function StructuredData() {
       {
         "@type": "ProfessionalService",
         "@id": `${siteConfig.url}#service`,
-        name: `${siteConfig.name} — Soluciones de IA y software`,
+        name: meta.serviceName,
         url: siteConfig.url,
         image: `${siteConfig.url}logo.png`,
         provider: { "@id": `${siteConfig.url}#person` },
-        serviceType: [
-          "Soluciones de inteligencia artificial",
-          "Asistentes y chatbots con IA",
-          "Automatización de procesos",
-          "Análisis de datos",
-          "Desarrollo de software a medida",
-        ],
+        serviceType: meta.serviceTypes,
       },
       {
         "@type": "WebSite",
         "@id": `${siteConfig.url}#website`,
         url: siteConfig.url,
         name: `${siteConfig.name} — Portafolio`,
-        inLanguage: "es",
+        inLanguage: locale,
         publisher: { "@id": `${siteConfig.url}#person` },
       },
     ],

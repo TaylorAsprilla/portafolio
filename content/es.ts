@@ -10,10 +10,40 @@ export const es: Content = {
   ],
   ui: {
     skip: "Saltar al contenido",
-    index: "Índice",
+    index: "Menú",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
     backToTop: "Volver arriba",
     visit: "Ver sitio",
     scrollHint: "Desplázate",
+    newTab: "(se abre en una pestaña nueva)",
+    techLabel: "Tecnologías",
+    servicesLabel: "Servicios",
+    heroAlt: "Laptop mostrando el logo de Taylor Interactivo",
+    shotAlt: "Captura del sitio {name}",
+    homeLabel: "Taylor Interactivo — inicio",
+    switchLang: "Switch to English",
+    langCode: "ES",
+    altLangCode: "EN",
+  },
+  meta: {
+    title: "Taylor Asprilla | Soluciones de IA, Automatización y Desarrollo de Software",
+    description:
+      "Soluciones de inteligencia artificial, automatización de procesos y software a medida para empresas. Taylor Asprilla, ingeniero de software Full Stack en Bogotá, Colombia.",
+    ogLocale: "es_CO",
+    jobTitle: "Software Engineer y Engineering Team Lead",
+    serviceName: "Taylor Asprilla — Soluciones de IA y software",
+    serviceTypes: [
+      "Soluciones de inteligencia artificial",
+      "Asistentes y chatbots con IA",
+      "Automatización de procesos",
+      "Análisis de datos",
+      "Desarrollo de software a medida",
+    ],
+    ogAlt: "Taylor Asprilla — Software Engineer, Full Stack Developer y Engineering Team Lead",
+    ogHeadline: "Soluciones de IA y automatización",
+    ogSubtitle: "Software Engineer · Full Stack Developer",
+    ogFooter: "Agentes de IA · Automatización de procesos · Software a medida",
   },
   hero: {
     seoTitle: "Soluciones de IA, automatización y desarrollo de software",
@@ -42,7 +72,7 @@ export const es: Content = {
     description: "Siete áreas que cubren el ciclo completo de una solución de software.",
     items: [
       {
-        title: "AI Agents & Integrations",
+        title: "Agentes de IA e integraciones",
         text: "Agentes y asistentes de IA conectados a tus sistemas, datos y canales de trabajo.",
         points: [
           "Agentes de IA con herramientas y memoria",
@@ -53,12 +83,12 @@ export const es: Content = {
         ],
       },
       {
-        title: "Software Engineering",
+        title: "Ingeniería de software",
         text: "Código mantenible y bien probado, con APIs claras y buenas prácticas.",
         points: ["APIs REST y GraphQL", "Pruebas y code review", "Código limpio y modular"],
       },
       {
-        title: "Full Stack Development",
+        title: "Desarrollo Full Stack",
         text: "Producto completo, de la interfaz a la base de datos.",
         points: [
           "React, Next.js y Angular",
@@ -67,7 +97,7 @@ export const es: Content = {
         ],
       },
       {
-        title: "Software Architecture",
+        title: "Arquitectura de software",
         text: "Sistemas pensados para evolucionar sin reescribirse.",
         points: [
           "Diseño de sistemas y módulos",
@@ -76,17 +106,17 @@ export const es: Content = {
         ],
       },
       {
-        title: "Data Engineering & Analytics",
+        title: "Ingeniería de datos y analítica",
         text: "Datos confiables, listos para analizar y para tomar decisiones.",
         points: ["Pipelines ETL", "SQL y modelado de datos", "Visualización con Power BI"],
       },
       {
-        title: "Cloud Solutions & DevOps",
+        title: "Cloud y DevOps",
         text: "Despliegues automatizados sobre infraestructura reproducible.",
         points: ["AWS y Vercel", "Docker", "CI/CD con GitHub Actions"],
       },
       {
-        title: "Technical Leadership",
+        title: "Liderazgo técnico",
         text: "Equipos que entregan con criterio, ritmo y calidad.",
         points: [
           "Liderazgo de equipos de ingeniería",
@@ -110,74 +140,36 @@ export const es: Content = {
     description: "Herramientas que uso en proyectos reales, organizadas por área.",
     groups: [
       {
-        title: "AI & Agents",
+        title: "IA y agentes",
         items: [
           "Claude API",
           "OpenAI API",
           "MCP (Model Context Protocol)",
           "LangChain",
           "RAG y embeddings",
-          "pgvector / Vector DBs",
           "n8n / Make",
-          "Webhooks",
           "WhatsApp Business API",
         ],
       },
       {
         title: "Frontend",
-        items: [
-          "React",
-          "Next.js",
-          "Angular",
-          "TypeScript",
-          "JavaScript",
-          "Tailwind CSS",
-          "Redux / Zustand",
-          "React Query",
-          "Framer Motion",
-          "React Native",
-          "Flutter",
-        ],
+        items: ["React", "Next.js", "Angular", "TypeScript", "Tailwind CSS"],
       },
       {
         title: "Backend",
-        items: [
-          "Node.js",
-          "Express",
-          "NestJS",
-          "Python",
-          "Django / FastAPI",
-          "GraphQL",
-          "REST APIs",
-          "JWT / Autenticación",
-        ],
+        items: ["Node.js", "NestJS", "Python", "FastAPI", "REST y GraphQL"],
       },
       {
-        title: "Databases",
-        items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Prisma", "Firebase"],
+        title: "Bases de datos",
+        items: ["PostgreSQL", "MongoDB", "Redis"],
       },
       {
-        title: "Cloud & Infrastructure",
-        items: ["AWS", "Vercel", "Nginx"],
+        title: "Cloud y DevOps",
+        items: ["AWS", "Vercel", "Docker", "CI/CD", "GitHub Actions"],
       },
       {
-        title: "DevOps",
-        items: ["Docker", "CI/CD", "GitHub Actions", "Git"],
-      },
-      {
-        title: "Data Engineering",
-        items: [
-          "Python",
-          "Pandas / NumPy",
-          "SQL",
-          "Pipelines ETL",
-          "Power BI",
-          "Visualización de datos",
-        ],
-      },
-      {
-        title: "Tools & Platforms",
-        items: ["GitHub", "Postman", "Figma", "Jira / Linear", "WordPress"],
+        title: "Ingeniería de datos",
+        items: ["Pandas / NumPy", "SQL", "Pipelines ETL", "Power BI"],
       },
     ],
   },

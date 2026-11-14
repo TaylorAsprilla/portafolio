@@ -21,9 +21,9 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
 AddType image/webp .webp
 AddType application/manifest+json .webmanifest
 </IfModule>
-<Files "opengraph-image">
+<FilesMatch "^opengraph-image">
 ForceType image/png
-</Files>
+</FilesMatch>
 
 # Compresión
 <IfModule mod_deflate.c>

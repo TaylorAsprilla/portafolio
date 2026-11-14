@@ -180,9 +180,9 @@ export const es: Content = {
       "¿Tienes un proyecto, un reto técnico o una oportunidad? Cuéntame el contexto y te respondo personalmente.",
     chat: {
       label: "Escríbeme directo",
-      whatsapp: "Escríbeme por WhatsApp",
-      telegram: "Escríbeme por Telegram",
-      email: "Escríbeme por correo",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "Correo",
       more: "También me encuentras en",
     },
     channels: { email: "Correo", whatsapp: "WhatsApp", location: "Ubicación" },

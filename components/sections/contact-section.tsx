@@ -92,10 +92,10 @@ function ChatButton({ href, label, detail, newTab, icon, brand }: ChatButtonProp
         />
       </span>
       <span className="mt-auto block">
-        <span className="block font-display text-2xl font-bold leading-tight transition-colors duration-300 group-hover:text-primary">
-          {label}
+        <span className="sr-only">{label}: </span>
+        <span className="block break-all font-display text-xl font-bold leading-tight transition-colors duration-300 group-hover:text-primary sm:text-2xl">
+          {detail}
         </span>
-        <span className="mt-1.5 block break-all text-sm text-muted-foreground">{detail}</span>
       </span>
       {newTab && <span className="sr-only">{newTab}</span>}
     </a>

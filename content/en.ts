@@ -180,9 +180,9 @@ export const en: Content = {
       "Have a project, a technical challenge or an opportunity? Tell me the context and I will reply personally.",
     chat: {
       label: "Message me directly",
-      whatsapp: "Message me on WhatsApp",
-      telegram: "Message me on Telegram",
-      email: "Email me",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "Email",
       more: "You can also find me on",
     },
     channels: { email: "Email", whatsapp: "WhatsApp", location: "Location" },

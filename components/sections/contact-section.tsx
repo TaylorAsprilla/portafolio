@@ -1,48 +1,8 @@
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, MapPin, type LucideIcon } from "lucide-react";
 import { SectionShell } from "@/components/sections/section-shell";
 import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/data/config";
 import type { Content } from "@/content";
-
-interface RowProps {
-  newTab: string;
-  label: string;
-  value: string;
-  href?: string;
-  external?: boolean;
-}
-
-function Row({ newTab, label, value, href, external }: RowProps) {
-  const body = (
-    <>
-      <span className="label">{label}</span>
-      <span className="flex items-center gap-2 text-base text-foreground">
-        {value}
-        {external && (
-          <ArrowUpRight
-            aria-hidden="true"
-            className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
-          />
-        )}
-      </span>
-      {external && <span className="sr-only">{newTab}</span>}
-    </>
-  );
-
-  const cls = "group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-border py-4";
-
-  if (!href) return <div className={cls}>{body}</div>;
-
-  return (
-    <a
-      href={href}
-      className={`${cls} rounded-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    >
-      {body}
-    </a>
-  );
-}
 
 /* Íconos de marca (lucide no los incluye). Rellenos con el color de la marca. */
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -67,7 +27,7 @@ interface ChatButtonProps {
   detail: string;
   newTab?: string;
   icon: React.ReactNode;
-  /** Color del ícono (marca de cada canal). */
+  /** Color de la marca de cada canal: tiñe el fondo, el ícono y el resplandor al pasar el cursor. */
   brand: string;
 }
 
@@ -76,28 +36,90 @@ function ChatButton({ href, label, detail, newTab, icon, brand }: ChatButtonProp
     <a
       href={href}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="group relative flex h-full flex-col gap-6 rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-7"
+      style={
+        {
+          "--brand": brand,
+          backgroundImage:
+            "linear-gradient(150deg, color-mix(in srgb, var(--brand) 12%, white), white 62%)",
+          borderColor: "color-mix(in srgb, var(--brand) 22%, hsl(var(--border)))",
+        } as React.CSSProperties
+      }
+      className="group relative flex min-h-[15rem] flex-col justify-between overflow-hidden rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-[color:var(--brand)] hover:shadow-[0_24px_48px_-24px_var(--brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-8"
     >
-      <span className="flex items-start justify-between">
+      {/* Marca de agua del ícono, muy tenue */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-10 -right-8 h-48 w-48 opacity-[0.07] transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-110 group-hover:opacity-[0.12] [&>svg]:h-full [&>svg]:w-full"
+        style={{ color: "var(--brand)" }}
+      >
+        {icon}
+      </span>
+
+      <span className="relative flex items-start justify-between">
         <span
           aria-hidden="true"
-          className="flex h-14 w-14 items-center justify-center rounded-xl text-white"
-          style={{ backgroundColor: brand }}
+          className="flex h-16 w-16 items-center justify-center rounded-2xl text-white shadow-[0_12px_24px_-10px_var(--brand)] transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3"
+          style={{ backgroundColor: "var(--brand)" }}
         >
           {icon}
         </span>
-        <ArrowUpRight
+        <span
           aria-hidden="true"
-          className="h-6 w-6 text-muted-foreground transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary"
-        />
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-all duration-300 group-hover:border-transparent group-hover:bg-[color:var(--brand)] group-hover:text-white"
+        >
+          <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </span>
       </span>
-      <span className="mt-auto block">
+
+      <span className="relative mt-10 block">
         <span className="sr-only">{label}: </span>
-        <span className="block break-all font-display text-xl font-bold leading-tight transition-colors duration-300 group-hover:text-primary sm:text-2xl">
+        <span className="block break-all font-display text-xl font-bold leading-tight sm:text-2xl">
           {detail}
         </span>
       </span>
       {newTab && <span className="sr-only">{newTab}</span>}
+    </a>
+  );
+}
+
+interface PillProps {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  href?: string;
+  newTab?: string;
+}
+
+/** Enlace secundario en forma de píldora (o texto simple si no tiene enlace). */
+function Pill({ icon: Icon, label, value, href, newTab }: PillProps) {
+  const body = (
+    <>
+      <span
+        aria-hidden="true"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
+      >
+        <Icon className="h-4 w-4" />
+      </span>
+      <span className="flex flex-col leading-tight">
+        <span className="label text-[10px]">{label}</span>
+        <span className="text-sm font-medium text-foreground">{value}</span>
+      </span>
+      {newTab && <span className="sr-only">{newTab}</span>}
+    </>
+  );
+  const cls =
+    "group inline-flex items-center gap-3 rounded-full border border-border bg-background py-2 pl-2 pr-6 transition-all duration-300";
+
+  if (!href) return <div className={cls}>{body}</div>;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${cls} hover:-translate-y-0.5 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+    >
+      {body}
     </a>
   );
 }
@@ -119,8 +141,14 @@ export function ContactSection({
       description={content.description}
     >
       <Reveal>
-        <p className="label mb-5">{content.chat.label}</p>
-        <div className="grid gap-4 md:grid-cols-3">
+        <p className="label mb-5 flex items-center gap-3">
+          <span aria-hidden="true" className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-warm opacity-70 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-warm" />
+          </span>
+          {content.chat.label}
+        </p>
+        <div className="grid gap-5 md:grid-cols-3">
           <ChatButton
             href={`https://wa.me/${siteConfig.whatsapp}`}
             label={content.chat.whatsapp}
@@ -141,23 +169,23 @@ export function ContactSection({
             href={`mailto:${siteConfig.email}`}
             label={content.chat.email}
             detail={siteConfig.email}
-            brand="hsl(var(--primary))"
-            icon={<Mail aria-hidden="true" className="h-7 w-7" />}
+            brand="#3F5EA8"
+            icon={<Mail aria-hidden="true" className="h-8 w-8" />}
           />
         </div>
       </Reveal>
 
       <Reveal delay={0.08} className="mt-14 lg:mt-20">
-        <p className="label mb-2">{content.chat.more}</p>
-        <ul className="grid gap-x-10 sm:grid-cols-3">
+        <p className="label mb-5">{content.chat.more}</p>
+        <ul className="flex flex-wrap gap-3">
           <li>
-            <Row newTab={newTab} label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} external />
+            <Pill icon={Linkedin} label="LinkedIn" value="in/TaylorAsprilla" href={siteConfig.social.linkedin} newTab={newTab} />
           </li>
           <li>
-            <Row newTab={newTab} label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} external />
+            <Pill icon={Github} label="GitHub" value="TaylorAsprilla" href={siteConfig.social.github} newTab={newTab} />
           </li>
           <li>
-            <Row newTab={newTab} label={content.channels.location} value={siteConfig.location} />
+            <Pill icon={MapPin} label={content.channels.location} value={siteConfig.location} />
           </li>
         </ul>
       </Reveal>
